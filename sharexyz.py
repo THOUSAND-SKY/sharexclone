@@ -655,7 +655,7 @@ def upload_file(file: File, keep=False):
         env.ONLINE_HISTORY[file_name_new]['url'] = clipboard
 
         notify.send_notification("Copied to clipboard", clipboard, clickable=True)
-        playsound(os.path.join(env.SOUNDS_DIR, 'upload_success.wav'))
+        # playsound(os.path.join(env.SOUNDS_DIR, 'upload_success.wav'))
         log('debug x')
     else:
         log('debug 7')
@@ -664,7 +664,7 @@ def upload_file(file: File, keep=False):
         notify.send_notification(
             "Failure!", "Upload failed. Check internet connection or poke simon if the issue persists."
         )
-        playsound(os.path.join(env.SOUNDS_DIR, 'upload_failed.wav'))
+        # playsound(os.path.join(env.SOUNDS_DIR, 'upload_failed.wav'))
 
     _generate_cache()
 
@@ -845,8 +845,8 @@ class ShareXYZTool(Gtk.Window):
         env.VIDEO_RECORDER = VideoRecorder()
         Keybinder.init()
         Keybinder.bind(env.SYSTEM_CONFIG['binds']['screenshot'], self.take_screenshot)
-        Keybinder.bind(env.SYSTEM_CONFIG['binds']['waiter'], self.disable_waiter)
-        Keybinder.bind(env.SYSTEM_CONFIG['binds']['history'], HistoryWindow.reopen_history_window)
+        # Keybinder.bind(env.SYSTEM_CONFIG['binds']['waiter'], self.disable_waiter)
+        # Keybinder.bind(env.SYSTEM_CONFIG['binds']['history'], HistoryWindow.reopen_history_window)
 
     def take_screenshot(self, keystring):
         log('take screenshot in')
@@ -1024,7 +1024,7 @@ class ScreenshotCanvas(tk.Tk):
             img_resized = img.resize(size)
             log("Size after resize: ", img_resized.size)
 
-            img_resized.save(file.file_path)
+            img_resized.save(file.file_path, optimize=True)
             img_resized.save(os.path.join(env.DATA_PATH, 'temp', file.file_name))
 
             update_history_file(file)
@@ -1055,7 +1055,7 @@ class TrayIcon:
             title='ShareXYZ',
             menu=self._build_menus()
         )
-        Keybinder.bind(env.SYSTEM_CONFIG['binds']['upload_latest'], self.__upload_latest)
+        # Keybinder.bind(env.SYSTEM_CONFIG['binds']['upload_latest'], self.__upload_latest)
 
     def _build_menus(self):
         upload_file = pystray.MenuItem(
@@ -1778,8 +1778,8 @@ def on_release(key):
 
     if env.SYSTEM_CONFIG['binds']['destroy'] == "<Escape>" and key == keyboard.Key.esc:
         log('ESC!')
-        env.VIDEO_RECORDER.kill_video()
-        env.WAITER['active'] = False
+        # env.VIDEO_RECORDER.kill_video()
+        # env.WAITER['active'] = False
 
     debug_log('Key released: {0}'.format(key))
 
